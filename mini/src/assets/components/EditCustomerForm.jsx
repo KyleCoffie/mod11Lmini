@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import API_BASE_URL from '../../config';
 
 const EditCustomerForm = () => {
     const nameRef = useRef(null);
@@ -16,7 +17,7 @@ const EditCustomerForm = () => {
         const fetchCustomer = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/customer/${customer_id}`);
+                const response = await axios.get(`${API_BASE_URL}/customer/${customer_id}`);
                 nameRef.current.value = response.data.name;
                 emailRef.current.value = response.data.email;
                 phoneRef.current.value = response.data.phone;
@@ -52,7 +53,7 @@ const EditCustomerForm = () => {
             const phone = phoneRef.current.value;
 
             try {
-                await axios.put(`http://127.0.0.1:5000/customer/${customer_id}`, { name, email, phone });
+                await axios.put(`${API_BASE_URL}/customer/${customer_id}`, { name, email, phone });
                 setSuccessMessage('Customer updated successfully!');
                 setErrors({});
                 navigate('/customers');

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import API_BASE_URL from '../../config';
 
 const EditProductForm = () => {
     const nameRef = useRef(null);
@@ -15,7 +16,7 @@ const EditProductForm = () => {
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/product/${product_id}`);
+                const response = await axios.get(`${API_BASE_URL}/product/${product_id}`);
                 nameRef.current.value = response.data.name;
                 priceRef.current.value = response.data.price;
                 setErrors({});
@@ -47,7 +48,7 @@ const EditProductForm = () => {
             const price = priceRef.current.value;
 
             try {
-                await axios.put(`http://127.0.0.1:5000/product/${product_id}`, { name, price });
+                await axios.put(`${API_BASE_URL}/product/${product_id}`, { name, price });
                 setSuccessMessage('Product updated successfully!');
                 setErrors({});
                 navigate('/products');

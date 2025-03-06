@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../../config';
 
 const ProductForm = () => {
     const nameRef = useRef(null);
@@ -27,7 +28,7 @@ const ProductForm = () => {
             console.log('Submitted product: ', { name, price });
             
             try {
-                await axios.post('http://127.0.0.1:5000/product', { name, price });
+                await axios.post(`${API_BASE_URL}/product`, { name, price });
                 setSuccessMessage('Product added/edited successfully!');
                 setErrors({});
                 // Reset form fields

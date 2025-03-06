@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import axios from 'axios';
+import API_BASE_URL from '../../config';
 
 const CustomerForm = () => {
     const nameRef = useRef(null);
@@ -30,7 +31,7 @@ const CustomerForm = () => {
             const phone = phoneRef.current.value;
 
             try {
-                await axios.post('http://127.0.0.1:5000/customer', { name, email, phone });
+                await axios.post(`${API_BASE_URL}/customer`, { name, email, phone });
                 setSuccessMessage('Customer added/edited successfully!');
                 setErrors({});
                 // Reset form fields

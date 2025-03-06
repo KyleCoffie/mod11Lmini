@@ -7,6 +7,7 @@ import ProductDetails from './assets/components/ProductDetails'; // Import the n
 import CustomerFormWrapper from "./assets/components/CustomerFormWrapper";
 import ProductFormWrapper from "./assets/components/ProductFormWrapper";
 import NavigationBar from "./assets/components/NavigationBar";
+import AddOrderForm from "./assets/components/AddOrderForm";
 import './AppStyles.css';
 
 class App extends Component {
@@ -55,12 +56,14 @@ class App extends Component {
                     <Route path="/edit-product/:product_id" element={<ProductFormWrapper />} />
                     <Route path="/customers" element={<CustomerList onCustomerSelect={this.handleCustomerSelect} />} />
                     <Route path="/products" element={<ProductList 
+                
                         onProductSelect={this.handleProductSelect}
                         onEditProduct={this.handleEditProduct}
                         onProductDeleted={this.handleProductDeleted}
                     />} />
                     <Route path="/product-details" element={<ProductDetails productId={selectedProductId} />} /> {/* New route */}
                     <Route path="/orders" element={<OrderList customerId={selectedCustomerId} onOrderSelect={this.handleOrderSelect} />} />
+                    <Route path="/add-order" element={<AddOrderForm onOrderAdded={this.handleOrderAdded} />} /> {/* New route */}
                 </Routes>
             </div>
         );

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import API_BASE_URL from '../../config';
 
 const ProductList = ({ onProductSelect, onEditProduct, onProductDeleted}) => {
     const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ const ProductList = ({ onProductSelect, onEditProduct, onProductDeleted}) => {
 
     const deleteProduct = async (id) => {
         try {
-            const response = await axios.delete(`http://127.0.0.1:5000/products/${id}`);
+            const response = await axios.delete(`${API_BASE_URL}/products/${id}`);
             console.log('Delete response:', response);
             onProductDeleted(); // Call the onProductDeleted prop after successful deletion
         } catch (error) {
@@ -26,7 +27,7 @@ const ProductList = ({ onProductSelect, onEditProduct, onProductDeleted}) => {
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get('http://127.0.0.1:5000/products');
+                const response = await axios.get(`${API_BASE_URL}/products`);
                 setProducts(response.data);
                 setError('');
             } catch (error) {
@@ -35,7 +36,7 @@ const ProductList = ({ onProductSelect, onEditProduct, onProductDeleted}) => {
             } finally {
                 setIsLoading(false);
             }
-        }; 
+        };
         fetchProducts();
     }, []);
 

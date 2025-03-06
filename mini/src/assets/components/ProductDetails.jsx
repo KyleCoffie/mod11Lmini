@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import API_BASE_URL from '../../config';
 
 const ProductDetails = ({ productId }) => {
     const [product, setProduct] = useState(null);
@@ -11,7 +12,7 @@ const ProductDetails = ({ productId }) => {
         const fetchProduct = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/product/${productId}`);
+                const response = await axios.get(`${API_BASE_URL}/product/${productId}`);
                 setProduct(response.data);
                 setError('');
             } catch (error) {
