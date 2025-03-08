@@ -1,17 +1,16 @@
-import { number, func } from 'prop-types';
+import { func } from 'prop-types';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import API_BASE_URL from '../../config';
 
-const OrderList = ({ customerId, onOrderSelect, onEditOrder, onOrderDeleted }) => {
+const OrderList = ({ onOrderSelect, onEditOrder, onOrderDeleted }) => {
     const [orders, setOrders] = useState([]);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const deleteOrder = async (id) => {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/order/${id}`);
+            const response = await axios.delete(`${API_BASE_URL}/orders/${id}`);
             console.log('Delete response:', response);
             onOrderDeleted();
         } catch (error) {
@@ -22,22 +21,21 @@ const OrderList = ({ customerId, onOrderSelect, onEditOrder, onOrderDeleted }) =
 
     useEffect(() => {
         const fetchOrders = async () => {
-            if (customerId) {
-                setIsLoading(true);
-                try {
-                    const response = await axios.get(`${API_BASE_URL}/order?customerId=${customerId}`);
-                    setOrders(response.data);
-                    setError('');
-                } catch (error) {
-                    console.error('Error fetching orders:', error);
-                    setError('Error fetching order data. Please try again.');
-                } finally {
-                    setIsLoading(false);
-                }
+            setIsLoading(true);
+            try {
+                const response = await axios.get(`${API_BASE_URL}/orders`);
+                console.log('Fetched orders:', response.data);
+                setOrders(response.data);
+                setError('');
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                setError('Error fetching order data. Please try again.');
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchOrders();
-    }, [customerId]);
+    }, []);
 
     return (
         <div className='order-list'>
@@ -58,10 +56,9 @@ const OrderList = ({ customerId, onOrderSelect, onEditOrder, onOrderDeleted }) =
 };
 
 OrderList.propTypes = {
-    customerId: number,
-    onOrderSelect: PropTypes.func.isRequired,
+    onOrderSelect: func.isRequired,
     onEditOrder: func.isRequired,
-    onOrderDeleted: PropTypes.func.isRequired,
+    onOrderDeleted: func.isRequired,
 };
 
 export default OrderList;

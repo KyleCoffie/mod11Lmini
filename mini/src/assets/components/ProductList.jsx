@@ -14,7 +14,7 @@ const ProductList = ({ onProductSelect, onEditProduct, onProductDeleted}) => {
 
     const deleteProduct = async (id) => {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/products/${id}`);
+            const response = await axios.delete(`${API_BASE_URL}/product/${id}`);
             console.log('Delete response:', response);
             onProductDeleted(); // Call the onProductDeleted prop after successful deletion
         } catch (error) {

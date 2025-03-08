@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import axios from 'axios';
+import { Form, Alert,Button, Container } from 'react-bootstrap';
 import API_BASE_URL from '../../config';
 
 const ProductForm = () => {
@@ -46,25 +47,26 @@ const ProductForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <Container>
             <h3>Add/Edit Product</h3>
-            {isLoading && <div>Loading...</div>}
-            <label>
-                Name:
-                <input type="text" ref={nameRef} />
-                {errors.name && <div style={{color: 'red' }}>{errors.name}</div>}
-            </label>
-            <br />
-            <label>
-                Price:
-                <input type="number" ref={priceRef} />
-                {errors.price && <div style={{color: 'red' }}>{errors.price}</div>}
-            </label>
-            <br />
-            <button type="submit" disabled={isLoading}>Submit</button>
-            {errors.submit && <div style={{ color: 'red' }}>{errors.submit}</div>}
-            {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
-        </form>
+            {errors.submit && <Alert variant="danger">{errors.submit}</Alert>}
+            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+            <Form onSubmit={handleSubmit}>
+                <Form.Group>
+                    <Form.Label>Product Name</Form.Label>
+                    <Form.Control type="text" placeholder="Enter product name" ref={nameRef} />
+                    {errors.name && <Form.Text className="text-danger">{errors.name}</Form.Text>}
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control type="number" placeholder="Enter product price" ref={priceRef} />
+                    {errors.price && <Form.Text className="text-danger">{errors.price}</Form.Text>}
+                </Form.Group>
+                <Button variant="primary" type="submit" disabled={isLoading}>
+                    {isLoading ? 'Loading...' : 'Submit'}
+                </Button>
+            </Form>
+        </Container>
     );
 };
 

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import axios from 'axios';
+import { Form, Button, Alert,Container } from 'react-bootstrap';
 import API_BASE_URL from '../../config';
 
 const CustomerForm = () => {
@@ -50,31 +51,30 @@ const CustomerForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>Add/Edit Customer</h3>
-            {isLoading && <div>Loading...</div>}
-            <label>
-                Name:
-                <input type="text" ref={nameRef} />
-                {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
-            </label>
-            <br />
-            <label>
-                Email:
-                <input type="email" ref={emailRef} />
-                {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-            </label>
-            <br />
-            <label>
-                Phone:
-                <input type="tel" ref={phoneRef} />
-                {errors.phone && <div style={{ color: 'red' }}>{errors.phone}</div>}
-            </label>
-            <br />
-            <button type="submit" disabled={isLoading}>Submit</button>
-            {errors.submit && <div style={{ color: 'red' }}>{errors.submit}</div>}
-            {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
-        </form>
+        <Container>
+            <Form onSubmit={handleSubmit}>
+                <h3>Add/Edit Customer</h3>
+                {isLoading && <div>Loading...</div>}
+                {successMessage && <Alert variant="success">{successMessage}</Alert>}
+                {errors.submit && <Alert variant="danger">{errors.submit}</Alert>}
+                <Form.Group>
+                    <Form.Label>Name:</Form.Label>
+                    <Form.Control type="text" ref={nameRef} />
+                    {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Email:</Form.Label>
+                    <Form.Control type="email" ref={emailRef} />
+                    {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Phone:</Form.Label>
+                    <Form.Control type="text" ref={phoneRef} />
+                    {errors.phone && <div style={{ color: 'red' }}>{errors.phone}</div>}
+                </Form.Group>
+                <Button type="submit">Submit</Button>
+            </Form>
+        </Container>
     );
 }
 
